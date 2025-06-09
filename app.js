@@ -1,21 +1,21 @@
-const express = require('express');
-const app = express();
+import expressLayouts from 'express-ejs-layouts';
+import express from 'express';
+import routes from './routes/index.routes.js';
+import dotenv from 'dotenv'
+dotenv.config();
 
-const expressLayouts = require('express-ejs-layouts');
+const app = express();
 
 app.set('view engine', 'ejs');
 
-// Usar el middleware de layouts ANTES de las rutas
 app.use(expressLayouts);
 
-// Opcional: puedes especificar un layout por defecto (usa views/layout.ejs)
 app.set('layout', 'layout');
 
 // Rutas
-const userRoutes = require('./routes/userRoutes');
-app.use('/usuarios', userRoutes);
+app.use('/', routes);
 
-const port = 3000;
-app.listen(port, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log(`Servidor iniciado en http://localhost:${port}`);
 });
